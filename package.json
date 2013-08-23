@@ -17,6 +17,7 @@
     "type": "git",
     "url": "https://github.com/shtylman/clock-input.git"
   },
+  "style": "./style.css",
   "browser": {
     "emitter": "emitter-component",
     "classes": "classes-component"
