@@ -2,6 +2,8 @@
 
 clock-like time input control
 
+![clock input](https://raw.github.com/shtylman/clock-input/gh-pages/clockinput.png)
+
 ## install
 
 ```shell
