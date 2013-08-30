@@ -1,6 +1,6 @@
 {
   "name": "clock-input",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "widget to select time",
   "main": "index.js",
   "keywords": [
