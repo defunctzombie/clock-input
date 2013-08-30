@@ -6,17 +6,15 @@ var classes = require('classes');
 const k_hour_size = Math.PI / 6;
 
 var tmpl =
-'<div class="clock-input">' +
-    '<div class="hour-clock">' +
-        '<div class="hour-labels">' +
-            '<div class="minute-clock">' +
-                '<div class="minute-labels"></div>' +
-            '</div>' +
+'<div class="hour-clock">' +
+    '<div class="hour-labels">' +
+        '<div class="minute-clock">' +
+            '<div class="minute-labels"></div>' +
         '</div>' +
     '</div>' +
-    '<div data-ampm="am" class="ampm-select am">am</div>' +
-    '<div data-ampm="pm" class="ampm-select pm">pm</div>'
-'</div>';
+'</div>' +
+'<div data-ampm="am" class="ampm-select am">am</div>' +
+'<div data-ampm="pm" class="ampm-select pm">pm</div>'
 
 var ClockInput = function(element) {
     if (!(this instanceof ClockInput)) {
@@ -24,7 +22,9 @@ var ClockInput = function(element) {
     }
 
     var self = this;
-    var el = element.appendChild(domify(tmpl));
+    var el = element;
+    element.appendChild(domify(tmpl));
+    element.className += ' clock-input';
 
     // hour elements
     var hours = self.hours = {};
@@ -68,7 +68,7 @@ var ClockInput = function(element) {
         hours[idx] = label;
     });
 
-    var minute_circle = document.querySelector('.minute-labels');
+    var minute_circle = el.querySelector('.minute-labels');
 
     mk_circle(minute_circle, function(label, idx) {
         label.className += ' minute-label';
@@ -124,9 +124,6 @@ proto.set_time = function(date) {
     var hr = date.getHours();
     var min = date.getMinutes();
 
-    self.selected_time.setHours(hr);
-    self.selected_time.setMinutes(min);
-
     if (hr >= 12) {
         self.ampm_offset = 12;
         classes(self.am).remove('selected');
@@ -145,8 +142,12 @@ proto.set_time = function(date) {
         classes(self.selected_minute).remove('selected');
     }
 
+    var rounded_min = min - min % 5;
     self.selected_hour = self.hours[hr % 12];
-    self.selected_minute = self.minutes[min - min % 5];
+    self.selected_minute = self.minutes[rounded_min];
+
+    self.selected_time.setHours(hr);
+    self.selected_time.setMinutes(rounded_min);
 
     classes(self.selected_hour).add('selected');
     classes(self.selected_minute).add('selected');
